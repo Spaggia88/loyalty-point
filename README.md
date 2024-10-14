@@ -1,66 +1,54 @@
-## Foundry
-
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
-
-Foundry consists of:
-
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
-
-## Documentation
-
-https://book.getfoundry.sh/
-
-## Usage
-
-### Build
-
-```shell
-$ forge build
-```
-
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
+## Gravity Alpha Testnet Sepolia
 
 ### Deploy
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
+1. Deploy LoyaltyPointFactory
 
-### Cast
+   ```
+   forge create --rpc-url https://rpc-sepolia.gravity.xyz --constructor-args 0xa272C14931E725D5cDB30f87Af77CF5Ce3d20B32 --private-key <omit> --etherscan-api-key 123 --verify src/LoyaltyPoint/LoyaltyPointFactory.sol:LoyaltyPointFactory
+   ```
 
-```shell
-$ cast <subcommand>
-```
+2. Deploy LoyaltyPoint
 
-### Help
+   ```
+   FACTORY_ADDRESS=0x8a85eC5AE1ae2c757eEfBb10b1203C984120bf8c PRIVATE_KEY=<omitted> OWNER=0xa272C14931E725D5cDB30f87Af77CF5Ce3d20B32 MINTER=0xa272C14931E725D5cDB30f87Af77CF5Ce3d20B32 forge script script/DeployLoyaltyPoint.s.sol:DeployLoyaltyPoint --rpc-url https://rpc-sepolia.gravity.xyz --gas-estimate-multiplier 200
+   ```
 
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+3. Deploy ExampleLoyaltyPointHook
+
+   ```
+   PRIVATE_KEY=<omitted> forge script script/DeployExampleLoyaltyPointHook.s.sol:DeployExampleLoyaltyPointHook --rpc-url https://rpc-sepolia.gravity.xyz --broadcast --gas-estimate-multiplier 10000
+   ```
+
+4. Add Hook
+
+   ```
+   PRIVATE_KEY=<omitted> LOYALTY_POINT_ADDRESS=0xdffac9197c2e2505600529687c889920c4054e4a HOOK_ADDRESS=0xf385b659DD1B6785d4FDf83E34Ee228d2Fb10281 forge script script/AddHook.s.sol:AddHook --rpc-url https://rpc-sepolia.gravity.xyz --broadcast --gas-estimate-multiplier 5000
+   ```
+
+5. Mint Loyalty Point to user
+
+   ```
+   PRIVATE_KEY=<omitted> LOYALTY_POINT_ADDRESS=0xdffac9197c2e2505600529687c889920c4054e4a USER_ADDRESS=0xa272C14931E725D5cDB30f87Af77CF5Ce3d20B32 forge script script/MintLoyaltyPoint.s.sol:MintLoyaltyPoint --rpc-url https://rpc-sepolia.gravity.xyz --gas-estimate-multiplier 5000 --broadcast
+   ```
+
+   tx: [0xa4d01f742a1f532cecdb3b0c0a1a3b0922603cec4cf0edf46bd00c549ad03b75](https://explorer-sepolia.gravity.xyz/tx/0xa4d01f742a1f532cecdb3b0c0a1a3b0922603cec4cf0edf46bd00c549ad03b75)
+
+   In logs, you can see that the hook is called and the `PointsUpdated` event is emitted.
+
+### Contract Addresses
+
+#### LoyaltyPointFactory
+
+- Contract: https://explorer-sepolia.gravity.xyz/address/0x8a85eC5AE1ae2c757eEfBb10b1203C984120bf8c
+- Verification: `forge verify-contract --chain-id 13505 --watch --constructor-args $(cast abi-encode "constructor(address)" "0xa272C14931E725D5cDB30f87Af77CF5Ce3d20B32") --etherscan-api-key 123 --compiler-version 0.8.26+commit.8a97fa7a 0x8a85eC5AE1ae2c757eEfBb10b1203C984120bf8c src/LoyaltyPoint/LoyaltyPointFactory.sol:LoyaltyPointFactory`
+
+#### LoyaltyPoint
+
+- Contract: https://explorer-sepolia.gravity.xyz/address/0xdffac9197c2e2505600529687c889920c4054e4a
+- Verification: `forge verify-contract --chain-id 13505 --watch --constructor-args $(cast abi-encode "constructor(string,string,address,address[])" "My Loyalty Point" "MLP" "0xa272C14931E725D5cDB30f87Af77CF5Ce3d20B32" "[0xa272C14931E725D5cDB30f87Af77CF5Ce3d20B32]") --etherscan-api-key 123 --compiler-version 0.8.26+commit.8a97fa7a 0xdffac9197c2e2505600529687c889920c4054e4a src/LoyaltyPoint/LoyaltyPoint.sol:LoyaltyPoint`
+
+#### ExampleLoyaltyPointHook
+
+- Contract: https://explorer-sepolia.gravity.xyz/address/0xf385b659DD1B6785d4FDf83E34Ee228d2Fb10281
+- Verification: `forge verify-contract --chain-id 13505 --watch --etherscan-api-key 123 --compiler-version 0.8.26+commit.8a97fa7a 0xf385b659DD1B6785d4FDf83E34Ee228d2Fb10281 src/examples/ExampleLoyaltyPointHook.sol:ExampleLoyaltyPointHook`

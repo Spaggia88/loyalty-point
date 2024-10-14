@@ -1,0 +1,32 @@
+{
+  "transactions": [
+    {
+      "hash": null,
+      "transactionType": "CALL",
+      "contractName": "LoyaltyPoint",
+      "contractAddress": "0xdffac9197c2e2505600529687c889920c4054e4a",
+      "function": "addHook(address)",
+      "arguments": [
+        "0xf385b659DD1B6785d4FDf83E34Ee228d2Fb10281"
+      ],
+      "transaction": {
+        "from": "0xa272c14931e725d5cdb30f87af77cf5ce3d20b32",
+        "to": "0xdffac9197c2e2505600529687c889920c4054e4a",
+        "gas": "0xbc606",
+        "value": "0x0",
+        "input": "0x7b4e04e8000000000000000000000000f385b659dd1b6785d4fdf83e34ee228d2fb10281",
+        "nonce": "0xd",
+        "chainId": "0x34c1"
+      },
+      "additionalContracts": [],
+      "isFixedGasLimit": false
+    }
+  ],
+  "receipts": [],
+  "libraries": [],
+  "pending": [],
+  "returns": {},
+  "timestamp": 1729159226,
+  "chain": 13505,
+  "commit": "35ba0a2"
+}
