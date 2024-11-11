@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.24;
 
 import "forge-std/Script.sol";
-import {LoyaltyPoint} from "../src/LoyaltyPoint/LoyaltyPoint.sol";
+import {LoyaltyPoint} from "../../src/LoyaltyPoint/LoyaltyPoint.sol";
 
 contract AddHook is Script {
     function run() public {
@@ -17,9 +17,8 @@ contract AddHook is Script {
         vm.startBroadcast(deployerPrivateKey);
 
         // Create a low-level call to the factory contract
-        (bool success, bytes memory result) = address(loyaltyPoint).call(
-            abi.encodeWithSignature("addHook(address)", hookAddress)
-        );
+        (bool success, bytes memory result) =
+            address(loyaltyPoint).call(abi.encodeWithSignature("addHook(address)", hookAddress));
 
         vm.stopBroadcast();
 

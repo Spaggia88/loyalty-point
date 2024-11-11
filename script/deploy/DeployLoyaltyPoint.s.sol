@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.24;
 
 import "forge-std/Script.sol";
 
@@ -10,12 +10,7 @@ contract DeployLoyaltyPoint is Script {
         address owner = vm.envAddress("OWNER");
         address minter = vm.envAddress("MINTER");
 
-        console.log(
-            "Deploying LoyaltyPoint via factory",
-            factoryAddress,
-            "with owner",
-            owner
-        );
+        console.log("Deploying LoyaltyPoint via factory", factoryAddress, "with owner", owner);
 
         vm.startBroadcast(deployerPrivateKey);
 
@@ -28,11 +23,7 @@ contract DeployLoyaltyPoint is Script {
         // Create a low-level call to the factory contract
         (bool success, bytes memory result) = factoryAddress.call(
             abi.encodeWithSignature(
-                "createLoyaltyPoint(string,string,address,address[])",
-                name,
-                symbol,
-                initialAdmin,
-                minters
+                "createLoyaltyPoint(string,string,address,address[])", name, symbol, initialAdmin, minters
             )
         );
 

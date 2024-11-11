@@ -2,10 +2,28 @@
 src = "src"
 out = "out"
 libs = ["lib"]
+solc = "0.8.24"
+fs_permissions = [
+    { access = "read", path = "./out" },
+    { access = "read-write", path = "./deployments" },
+]
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
 
 remappings = ["@openzeppelin/=lib/openzeppelin-contracts/"]
 
+[rpc_endpoints]
+mainnet = "${RPC_MAINNET}"
+sepolia = "${RPC_SEPOLIA}"
+bsc = "${RPC_BSC}"
+bsc_testnet = "${RPC_BSC_TESTNET}"
+gravity = "${RPC_GRAVITY}"
+gravity_sepolia = "${RPC_GRAVITY_SEPOLIA}"
+
 [etherscan]
-gravity_testnet = { key = "", chain = "13505", url = "https://explorer-sepolia.gravity.xyz/api" }
+mainnet = { key = "${ETHERSCAN_API_KEY_MAINNET}", url = "${ETHERSCAN_API_URL_MAINNET}" }
+sepolia = { key = "${ETHERSCAN_API_KEY_SEPOLIA}", url = "${ETHERSCAN_API_URL_SEPOLIA}" }
+bsc = { key = "${ETHERSCAN_API_KEY_BSC}", url = "${ETHERSCAN_API_URL_BSC}" }
+bsc_testnet = { key = "${ETHERSCAN_API_KEY_BSC_TESTNET}", url = "${ETHERSCAN_API_URL_BSC_TESTNET}" }
+gravity = { key = "", chain = "1625", url = "${ETHERSCAN_API_URL_GRAVITY}" }
+gravity_sepolia = { key = "", chain = "13505", url = "${ETHERSCAN_API_URL_GRAVITY_SEPOLIA}" }
