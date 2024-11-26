@@ -2,17 +2,15 @@
 pragma solidity ^0.8.24;
 
 import "forge-std/Script.sol";
+import {BaseScript} from "../utils/Base.s.sol";
 
-contract DeployLoyaltyPoint is Script {
-    function run() public {
-        uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+contract DeployLoyaltyPoint is BaseScript {
+    function run() external chain broadcaster {
         address factoryAddress = vm.envAddress("FACTORY_ADDRESS");
         address owner = vm.envAddress("OWNER");
         address minter = vm.envAddress("MINTER");
 
         console.log("Deploying LoyaltyPoint via factory", factoryAddress, "with owner", owner);
-
-        vm.startBroadcast(deployerPrivateKey);
 
         string memory name = "My Loyalty Point";
         string memory symbol = "MLP";
@@ -32,7 +30,5 @@ contract DeployLoyaltyPoint is Script {
         }
         address loyaltyPointAddress = abi.decode(result, (address));
         console.log("LoyaltyPoint deployed at:", loyaltyPointAddress);
-
-        vm.stopBroadcast();
     }
 }
