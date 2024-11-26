@@ -19,6 +19,7 @@ bsc = "${RPC_BSC}"
 bsc_testnet = "${RPC_BSC_TESTNET}"
 gravity = "${RPC_GRAVITY}"
 gravity_sepolia = "${RPC_GRAVITY_SEPOLIA}"
+opbnb = "${RPC_OPBNB}"
 
 [etherscan]
 mainnet = { key = "${ETHERSCAN_API_KEY_MAINNET}", url = "${ETHERSCAN_API_URL_MAINNET}" }
@@ -27,3 +28,4 @@ bsc = { key = "${ETHERSCAN_API_KEY_BSC}", url = "${ETHERSCAN_API_URL_BSC}" }
 bsc_testnet = { key = "${ETHERSCAN_API_KEY_BSC_TESTNET}", url = "${ETHERSCAN_API_URL_BSC_TESTNET}" }
 gravity = { key = "", chain = "1625", url = "${ETHERSCAN_API_URL_GRAVITY}" }
 gravity_sepolia = { key = "", chain = "13505", url = "${ETHERSCAN_API_URL_GRAVITY_SEPOLIA}" }
+opbnb = { key = "${ETHERSCAN_API_KEY_OPBNB}", url = "${ETHERSCAN_API_URL_OPBNB}" }
